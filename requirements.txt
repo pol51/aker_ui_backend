@@ -1,0 +1,5 @@
+# database access (ORM)
+SQLAlchemy==1.2.5
+
+# database access (PostgreSQL)
+psycopg2==2.7.4
