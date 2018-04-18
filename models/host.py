@@ -10,5 +10,8 @@ class Host(Base):
     
     hostname = Column(String, unique=True)
 
+    def __init__(self, hostname):
+        self.hostname = hostname
+
     def __repr__(self):
         return "<Host('{0}')>".format(self.hostname)

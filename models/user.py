@@ -10,5 +10,8 @@ class User(Base):
     
     username = Column(String, unique=True)
 
+    def __init__(self, username):
+        self.username = username
+
     def __repr__(self):
         return "<User('{0}')>".format(self.username)
