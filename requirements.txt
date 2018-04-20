@@ -3,3 +3,8 @@ SQLAlchemy==1.2.5
 
 # database access (PostgreSQL)
 psycopg2==2.7.4
+
+# for the REST aAPI
+Flask==0.12.2
+Flask-Restless==0.17.0
+Flask-SQLAlchemy==2.3.2
