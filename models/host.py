@@ -1,9 +1,9 @@
 from sqlalchemy import Column, BigInteger, String
 
-from .base import Base
+from db import db
 
 
-class Host(Base):
+class Host(db.Model):
     __tablename__ = 'host'
 
     id = Column(BigInteger, nullable=False, primary_key=True)

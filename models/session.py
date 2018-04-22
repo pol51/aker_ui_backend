@@ -2,12 +2,12 @@ from sqlalchemy.orm import relationship
 from sqlalchemy import Column, BigInteger, ForeignKey, DateTime
 from sqlalchemy.dialects.postgresql import UUID
 
-from .base import Base
+from db import db
 from .user import User
 from .host import Host
 
 
-class Session(Base):
+class Session(db.Model):
     __tablename__ = 'session'
 
     uuid = Column(UUID, nullable=False, primary_key=True)

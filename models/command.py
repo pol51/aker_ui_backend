@@ -2,11 +2,11 @@ from sqlalchemy.orm import relationship
 from sqlalchemy import Column, BigInteger, String, ForeignKey, DateTime
 from sqlalchemy.dialects.postgresql import UUID
 
-from .base import Base
+from db import db
 from .session import Session
 
 
-class Command(Base):
+class Command(db.Model):
     __tablename__ = 'command'
 
     id = Column(BigInteger, nullable=False, primary_key=True)

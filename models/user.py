@@ -1,9 +1,9 @@
 from sqlalchemy import Column, BigInteger, String
 
-from .base import Base
+from db import db
 
 
-class User(Base):
+class User(db.Model):
     __tablename__ = 'user'
 
     id = Column(BigInteger, nullable=False, primary_key=True)
