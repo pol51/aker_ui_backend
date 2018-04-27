@@ -1,14 +1,12 @@
-from sqlalchemy import Column, BigInteger, String
-
 from db import db
 
 
 class User(db.Model):
     __tablename__ = 'user'
 
-    id = Column(BigInteger, nullable=False, primary_key=True)
+    id = db.Column(db.BigInteger, nullable=False, primary_key=True)
     
-    username = Column(String, unique=True)
+    username = db.Column(db.String, unique=True)
 
     def __init__(self, username):
         self.username = username

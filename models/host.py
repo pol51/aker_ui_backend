@@ -1,14 +1,12 @@
-from sqlalchemy import Column, BigInteger, String
-
 from db import db
 
 
 class Host(db.Model):
     __tablename__ = 'host'
 
-    id = Column(BigInteger, nullable=False, primary_key=True)
+    id = db.Column(db.BigInteger, nullable=False, primary_key=True)
     
-    hostname = Column(String, unique=True)
+    hostname = db.Column(db.String, unique=True)
 
     def __init__(self, hostname):
         self.hostname = hostname

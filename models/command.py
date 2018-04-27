@@ -1,5 +1,4 @@
-from sqlalchemy.orm import relationship
-from sqlalchemy import Column, BigInteger, String, ForeignKey, DateTime
+from sqlalchemy.orm import backref
 from sqlalchemy.dialects.postgresql import UUID
 
 from db import db
@@ -9,13 +8,13 @@ from .session import Session
 class Command(db.Model):
     __tablename__ = 'command'
 
-    id = Column(BigInteger, nullable=False, primary_key=True)
+    id = db.Column(db.BigInteger, nullable=False, primary_key=True)
 
-    timing = Column(DateTime, nullable=False)
-    cmd = Column(String, nullable=False)
+    timing = db.Column(db.DateTime, nullable=False)
+    cmd = db.Column(db.String, nullable=False)
 
-    session_uuid = Column(UUID, ForeignKey('session.uuid'), nullable=False)
-    session = relationship(Session, foreign_keys=[session_uuid])
+    session_uuid = db.Column(UUID(as_uuid=True), db.ForeignKey('session.uuid'), nullable=False)
+    session = db.relationship(Session, foreign_keys=[session_uuid], backref=backref('commands', lazy='dynamic'))
 
     def __init__(self, session, cmd, timing):
         self.session = session

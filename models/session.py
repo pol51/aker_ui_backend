@@ -1,5 +1,4 @@
-from sqlalchemy.orm import relationship
-from sqlalchemy import Column, BigInteger, ForeignKey, DateTime
+from sqlalchemy.orm import backref
 from sqlalchemy.dialects.postgresql import UUID
 
 from db import db
@@ -10,16 +9,16 @@ from .host import Host
 class Session(db.Model):
     __tablename__ = 'session'
 
-    uuid = Column(UUID, nullable=False, primary_key=True)
+    uuid = db.Column(UUID(as_uuid=True), nullable=False, primary_key=True)
     
-    user_id = Column(BigInteger, ForeignKey('user.id'), nullable=False)
-    user = relationship(User, foreign_keys=[user_id])
+    user_id = db.Column(db.BigInteger, db.ForeignKey('user.id'), nullable=False)
+    user = db.relationship(User, foreign_keys=[user_id], backref=backref('sessions', lazy='dynamic'))
 
-    host_id = Column(BigInteger, ForeignKey('host.id'), nullable=False)
-    host = relationship(Host, foreign_keys=[host_id])
+    host_id = db.Column(db.BigInteger, db.ForeignKey('host.id'), nullable=False)
+    host = db.relationship(Host, foreign_keys=[host_id], backref=backref('sessions', lazy='dynamic'))
 
-    start = Column(DateTime, nullable=False)
-    end = Column(DateTime, nullable=False)
+    start = db.Column(db.DateTime, nullable=False)
+    end = db.Column(db.DateTime, nullable=False)
 
     def __init__(self, uuid, user, host, start, end):
         self.uuid = uuid

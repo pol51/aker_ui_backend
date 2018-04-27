@@ -1,29 +1,35 @@
-from flask_potion import ModelResource, fields
-from flask_potion import Api
+from flask_potion import ModelResource, fields, Api
+from flask_potion.routes import Relation
 from models import *
 from app import app
 
 
 class UserResource(ModelResource):
+    sessions = Relation('session')
+
     class Meta:
         model = User
         natural_key = 'username'
 
 
 class HostResource(ModelResource):
+    sessions = Relation('session')
+
     class Meta:
         model = Host
         natural_key = 'hostname'
 
 
 class SessionResource(ModelResource):
+    commands = Relation('command')
+
     class Meta:
         model = Session
 
     class Schema:
+        uuid = fields.UUID()
         user = fields.Inline('user')
         host = fields.Inline('host')
-        uuid = fields.UUID()
         start = fields.DateTimeString()
         end = fields.DateTimeString()
         duration = fields.Custom('{"type": "number"}', io="r", formatter=lambda x: x.total_seconds())
@@ -40,10 +46,10 @@ class CommandResource(ModelResource):
 
 
 api = Api(app)
+api.add_resource(CommandResource)
+api.add_resource(SessionResource)
 api.add_resource(UserResource)
 api.add_resource(HostResource)
-api.add_resource(SessionResource)
-api.add_resource(CommandResource)
 
 
 if __name__ == '__main__':
