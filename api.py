@@ -32,7 +32,7 @@ class SessionResource(ModelResource):
         host = fields.Inline('host')
         start = fields.DateTimeString()
         end = fields.DateTimeString()
-        duration = fields.Custom('{"type": "number"}', io="r", formatter=lambda x: x.total_seconds())
+        duration = fields.Custom('{"type": "integer"}', io="r", formatter=lambda x: x.total_seconds())
 
 
 class CommandResource(ModelResource):

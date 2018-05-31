@@ -1,5 +1,6 @@
 from sqlalchemy.orm import backref
 from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy.ext.hybrid import hybrid_property
 
 from db import db
 from .user import User
@@ -27,9 +28,9 @@ class Session(db.Model):
         self.start = start
         self.end = end
     
-    @property
+    @hybrid_property
     def duration(self):
-      return self.end - self.start
-    
+        return self.end - self.start
+
     def __repr__(self):
         return "<Session(uuid='{0}', user='{1}', host='{2}', start='{3}', duration='{4}')>".format(self.uuid, self.user.username, self.host.hostname, self.start, self.duration)
