@@ -50,6 +50,39 @@ class SessionResource(ModelResource):
         with open(session_log_path, 'rb') as session_log:
             return base64.b64encode(session_log.read()).decode('utf-8', 'strict')
 
+    @Route.GET('/timed_log')
+    def session_timed_log(self, session_uuid: fields.UUID()) -> fields.List(fields.String()):
+        session = Session.query.filter(Session.uuid == session_uuid).first()
+        session_base_path = path.session_logs + session.start.date().isoformat().replace('-', '') + '/' + \
+            session.user.username + '_' + session.host.hostname + '_' + \
+            session.start.time().isoformat().split('.')[0].replace(':', '') + '_' + \
+            session_uuid
+        session_log_path = session_base_path + '.log'
+        session_timer_path = session_base_path + '.timer'
+        results = []
+        session_time = 0.
+        session_seek = 0
+        with open(session_log_path, 'rb') as session_log:
+            with open(session_timer_path, 'r') as session_timer:
+                session_data = session_log.read()
+                # todo improve this (use csv reader?)
+                lines = session_timer.readlines()
+                for l in lines:
+                    rel_time, rel_seek = l.split(' ')
+                    rel_time = float(rel_time)
+                    rel_seek = int(rel_seek)
+                    session_time += rel_time
+                    current_seek = session_seek
+                    session_seek += rel_seek
+                    results.append({
+                        'session_time': session_time,
+                        'session_seek': session_seek,
+                        'session_size': len(session_data),
+                        'data_size': rel_seek,
+                        'data': base64.b64encode(session_data[current_seek:session_seek]).decode('utf-8', 'strict')
+                    })
+        return results
+
 
 class CommandResource(ModelResource):
     class Meta:
