@@ -1,12 +1,12 @@
 # database access (ORM)
-SQLAlchemy==1.2.7
+SQLAlchemy==1.2.8
 
 # database access (PostgreSQL)
-psycopg2==2.7.4
+psycopg2==2.7.5
 
 # for the REST aAPI
-Flask==0.12.2
-git+git://github.com/biosustain/potion.git@d52e8f526bbee843a7d486cd45227dbdaf0b2240
+Flask==1.0.2
 Flask-SQLAlchemy==2.3.2
-Flask-CORS==3.0.3
+Flask-CORS==3.0.6
+Flask-Potion==0.15.0
 
