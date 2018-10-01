@@ -1,8 +1,8 @@
 # database access (ORM)
-SQLAlchemy==1.2.8
+SQLAlchemy==1.2.12
 
 # database access (PostgreSQL)
-psycopg2==2.7.5
+psycopg2-binary==2.7.5 # ToDo: switch back to psycopg2 when 2.8 will be released
 
 # for the REST aAPI
 Flask==1.0.2
