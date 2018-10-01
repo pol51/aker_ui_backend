@@ -1,8 +1,14 @@
+import os
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.pool import NullPool
 
 from config import db as db_conf
+
+if os.environ.get('SHOW_SQL_STATEMENTS', '0') != '0':
+    import logging
+    logging.basicConfig()
+    logging.getLogger('sqlalchemy.engine').setLevel(logging.INFO)
 
 
 class DB:
